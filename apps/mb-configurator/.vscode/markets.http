@@ -1,0 +1,10 @@
+### getAllMarkets
+GET {{$dotenv NUXT_PUBLIC_API_BASE}}/markets HTTP/1.1
+accept: application/json
+x-api-key:{{$dotenv NUXT_API_SECRET}}
+
+### 
+# @prompt marketId de_DE
+GET {{$dotenv NUXT_PUBLIC_API_BASE}}/markets/{{marketId}} HTTP/1.1
+accept: application/json
+x-api-key:{{$dotenv NUXT_API_SECRET}}
