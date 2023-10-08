@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "@mb/configurator",
   "private": true,
   "type": "module",
   "scripts": {
