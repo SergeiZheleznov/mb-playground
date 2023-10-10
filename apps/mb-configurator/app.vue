@@ -1,26 +1,21 @@
 <script setup lang="ts">
-import type { MarketItem } from "@/types";
-const config = useRuntimeConfig();
+import { useAuthStore } from "@/stores";
+import { storeToRefs } from "pinia";
 
-const { data } = await useFetch<MarketItem[]>(
-  `${config.public.apiBase}/markets`,
-  {
-    mode: "no-cors",
-    headers: {
-      accept: "application/json",
-      "x-api-key": config.apiSecret,
-    },
-  }
-);
+const authStore = useAuthStore();
+const { authenticated } = storeToRefs(authStore);
+const { authenticate, logout } = authStore;
+const handleLogin = async () => {
+  await authenticate("test");
+};
 
-if (process.server) {
-  console.log("API secret:", config.apiSecret);
-}
+const handleLogout = async () => logout();
 </script>
 <template>
-  <div v-if="data?.length">
-    <div v-for="market in data">
-      {{ market.marketId }}
-    </div>
+  <div>
+    {{ authenticated }}
+    <NuxtPage v-if="authenticated" />
+    <button v-if="authenticated" v-on:click="handleLogout">logout</button>
+    <button v-else v-on:click="handleLogin">authenticate</button>
   </div>
 </template>
